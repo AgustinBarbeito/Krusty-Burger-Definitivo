@@ -1,22 +1,25 @@
 "use client"
 
 import React from 'react';
+import styles from './ingredient-selector.module.css';
 
-export default function IngredientSelector({ ingredients, selectedIngredients, onToggleIngredient }) {
+export default function IngredientSelector({ ingredients = [], selectedIngredients = [], onToggleIngredient }) {
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold">Ingredientes Adicionales</h3>
-      <div className="space-y-2">
+    <div className={styles.selector}>
+      <h3 className={styles.title}>Ingredientes Adicionales</h3>
+      <div className={styles.list}>
         {ingredients.map((ingredient) => (
-          <label key={ingredient.id} className="flex items-center space-x-2">
+          <label key={ingredient.id} className={styles.item}>
             <input
               type="checkbox"
               checked={selectedIngredients.includes(ingredient.id)}
-              onChange={() => onToggleIngredient(ingredient.id)}
-              className="form-checkbox h-5 w-5 text-yellow-500"
+              onChange={() => onToggleIngredient && onToggleIngredient(ingredient.id)}
+              className={styles.checkbox}
             />
-            <span>{ingredient.name}</span>
-            <span className="text-gray-500">(+${ingredient.price})</span>
+            <span className={styles.name}>{ingredient.name}</span>
+            {ingredient.price > 0 && (
+              <span className={styles.price}>(+${ingredient.price})</span>
+            )}
           </label>
         ))}
       </div>
